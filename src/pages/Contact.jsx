@@ -1,10 +1,11 @@
 import React from "react";
-import { Formik } from "formik";
+import { Formik, Form, ErrorMessage, Field } from "formik";
+import { json } from "react-router-dom";
 import { ValidateContact } from "./validate-from/ValidateContact";
 
 const Contact = () => {
   return (
-    <div>
+    <>
       <section id="contact" className="contact">
         <div className="container">
           <div className="section-title">
@@ -36,15 +37,45 @@ const Contact = () => {
             </div>
 
             <div className="col-lg-7 mt-5 mt-lg-0 d-flex align-items-stretch">
+              {/* <form action="forms/contact.php" method="post" role="form" className="php-email-form">
+               <div className="row">
+                <div className="form-group col-md-6">
+                  <label htmlFor="name">Your Name</label>
+                  <input type="text" name="name" className="form-control" id="name" placeholder="Your Name" required/>
+                </div>
+                <div className="form-group col-md-6 mt-3 mt-md-0">
+                  <label htmlFor="name">Your Email</label>
+                  <input type="email" className="form-control" name="email" id="email" placeholder="Your Email" required/>
+                </div>
+              </div>
+              <div className="form-group mt-3">
+                <label htmlFor="name">Subject</label>
+                <input type="text" className="form-control" name="subject" id="subject" placeholder="Subject" required/>
+              </div>
+              <div className="form-group mt-3">
+                <label htmlFor="name">Message</label>
+                <textarea className="form-control" name="message" rows="10" required></textarea>
+              </div>
+              <div className="my-3">
+                <div className="loading">Loading</div>
+                <div className="error-message"></div>
+                <div className="sent-message">Your message has been sent. Thank you!</div>
+              </div> 
+              <div className="text-center"><button type="submit">Send Message</button></div>
+            </form> */}
               <Formik
                 initialValues={{
                   email: "",
                   password: "",
-                  subject: "",
                   message: "",
+                  name: "",
+                  status: "",
                 }}
-                validateSchema={ValidateContact}
-                // onSubmit={(values, { setSubmitting }) => {}}
+                validationSchema={ValidateContact}
+                onSubmit={(values) => {
+                  let data = { ...values };
+                  console.log("data : " + JSON.stringify(data));
+                }}
               >
                 {({
                   values,
@@ -54,100 +85,161 @@ const Contact = () => {
                   handleBlur,
                   handleSubmit,
                   isSubmitting,
-                  /* and other goodies */
+                  setFieldValue,
                 }) => (
-                  <form onSubmit={handleSubmit} className="php-email-form">
+                  <Form onSubmit={handleSubmit} className="php-email-form">
                     <div className="row">
-                      <div className="form-group col-md-6">
-                        <input
-                          type="email"
-                          name="email"
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          value={values.email}
-                          className="form-control"
-                          placeholder="Your Email"
+                      <div className="form-group col-md-12">
+                        Status :
+                        <Field
+                          type="radio"
+                          name="status"
+                          value="นักศึกษา"
+                          defaultChecked={values.status === "นักศึกษา"}
+                          className={
+                            errors.status && touched.status ? " is-invalid" : ""
+                          }
+                
+                        />{" "}
+                        <label>นักศึกษา</label>
+                        <Field
+                          type="radio"
+                          name="status"
+                          value="อาจารย์/บุคคลกร"
+                          className={
+                            errors.status && touched.status ? " is-invalid" : ""
+                          }
+                          defaultChecked={values.status === "นักศึกษา"}
+                        />{" "}
+                        <label>อาจารย์/บุคคลกร</label>
+                        <Field
+                          type="radio"
+                          name="status"
+                          value="บุคคลภายนอก"
+                          defaultChecked={values.status === "นักศึกษา"}
+                          className={
+                            errors.status && touched.status ? " is-invalid" : ""
+                          }
+                        />{" "}
+                        <label>บุคคลภายนอก</label>
+                        <ErrorMessage
+                          name="status"
+                          component="div"
+                          className="invalid-feedback"
                         />
                       </div>
-                      {errors.email && touched.email && errors.email}
                       <div className="form-group col-md-6">
+                        <label htmlFor="name">Your Email</label>
+                        <input
+                          type="text"
+                          name="email"
+                          // onChange={handleChange}
+                          onChange={(e) => {
+                            setFieldValue(
+                              "email",
+                              e.target.value.replace(
+                                /[^A-Za-z_.#?!@$%^&*0-9]/gi,
+                                ""
+                              )
+                            );
+                          }}
+                          onBlur={handleBlur}
+                          value={values.email}
+                          className={
+                            "form-control" +
+                            (errors.email && touched.email ? " is-invalid" : "")
+                          }
+                          placeholder="Your email"
+                        />
+                        <ErrorMessage
+                          name="email"
+                          component="div"
+                          className="invalid-feedback"
+                        />
+                      </div>
+                      <div className="form-group col-md-6 mt-3 mt-md-0">
+                        <label htmlFor="name">Your Password</label>
                         <input
                           type="password"
                           name="password"
                           onChange={handleChange}
                           onBlur={handleBlur}
                           value={values.password}
-                          className="form-control"
-                          placeholder="Password"
+                          className={
+                            "form-control" +
+                            (errors.password && touched.password
+                              ? " is-invalid"
+                              : "")
+                          }
+                          placeholder="Your Password"
+                        />
+                        <ErrorMessage
+                          name="password"
+                          component="div"
+                          className="invalid-feedback"
                         />
                       </div>
-                      {errors.password && touched.password && errors.password}
-                      <div className="form-group mt-3">
+                      <div className="form-group col-md-12">
+                        <label htmlFor="name">Name</label>
                         <input
                           type="text"
-                          name="subject"
+                          name="name"
                           onChange={handleChange}
                           onBlur={handleBlur}
-                          value={values.subject}
-                          className="form-control"
-                          placeholder="Subject"
+                          value={values.name}
+                          className={
+                            "form-control" +
+                            (errors.name && touched.name ? " is-invalid" : "")
+                          }
+                          placeholder="Your Name"
+                        />
+                        <ErrorMessage
+                          name="name"
+                          component="div"
+                          className="invalid-feedback"
                         />
                       </div>
-                      {errors.subject && touched.subject && errors.subject}
-                      <div className="form-group mt-3">
+
+                      <div className="form-group col-md-12">
+                        <label htmlFor="name">Message</label>
                         <textarea
                           type="text"
                           name="message"
+                          rows={5}
                           onChange={handleChange}
                           onBlur={handleBlur}
                           value={values.message}
-                          className="form-control"
-                          rows="10" 
-                          placeholder="Message"
+                          className={
+                            "form-control" +
+                            (errors.message && touched.message
+                              ? " is-invalid"
+                              : "")
+                          }
+                          placeholder="message"
+                        />
+                        <ErrorMessage
+                          name="message"
+                          component="div"
+                          className="invalid-feedback"
                         />
                       </div>
-                      {errors.message && touched.message && errors.message}
-                      <div className="text-center">
-                        <button type="submit" disabled={isSubmitting}>
-                          Send Message
+                      <div>
+                        <button type="submit" className="text-center">
+                          Submit
+                        </button>
+                        <button type="reset" className="resetcss">
+                          Reset
                         </button>
                       </div>
                     </div>
-                  </form>
+                  </Form>
                 )}
               </Formik>
-              {/* <form action="forms/contact.php" method="post" role="form" className="php-email-form">
-                <div className="row">
-                  <div className="form-group col-md-6">
-                    <label htmlFor="name">Your Name</label>
-                    <input type="text" name="name" className="form-control" id="name" placeholder="Your Name" required/>
-                  </div>
-                  <div className="form-group col-md-6 mt-3 mt-md-0">
-                    <label htmlFor="name">Your Email</label>
-                    <input type="email" className="form-control" name="email" id="email" placeholder="Your Email" required/>
-                  </div>
-                </div>
-                <div className="form-group mt-3">
-                  <label htmlFor="name">Subject</label>
-                  <input type="text" className="form-control" name="subject" id="subject" placeholder="Subject" required/>
-                </div>
-                <div className="form-group mt-3">
-                  <label htmlFor="name">Message</label>
-                  <textarea className="form-control" name="message" rows="10" required></textarea>
-                </div>
-                <div className="my-3">
-                  <div className="loading">Loading</div>
-                  <div className="error-message"></div>
-                  <div className="sent-message">Your message has been sent. Thank you!</div>
-                </div>
-                <div className="text-center"><button type="submit">Send Message</button></div>
-              </form> */}
             </div>
           </div>
         </div>
       </section>
-    </div>
+    </>
   );
 };
-
 export default Contact;
