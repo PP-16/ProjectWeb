@@ -8,6 +8,8 @@ import Portfolio from "../pages/Portfolio"
 import Services from "../pages/Services"
 import Team from "../pages/Team"
 
+
+
 export const PublicRoute = [
     {
         id:"0",
@@ -58,5 +60,6 @@ export const PublicRoute = [
         id:"9",
         path:"/team",
         element:<Team/>
-    }
+    },
 ];
+
