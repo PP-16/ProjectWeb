@@ -76,14 +76,17 @@ const ShowEmp = () => {
                       options={options}
                     />
                   </div>
-                  <div>
-                    <button type="submit" className="text-center">
-                      Submit
-                    </button>
-                    <button type="reset" className="resetcss">
-                      Reset
-                    </button>
-                  </div>
+                  <div
+                      className="form-group col-md-2 text-center"
+                      style={{ marginTop: "29px" }}
+                    >
+                      <button type="submit" className="btn btn-primary btn-md m-3">
+                        ค้นหา
+                      </button>
+                      <button type="reset" className="btn btn-danger btn-md">
+                        ล้างข้อมูล
+                      </button>
+                    </div>
                 </div>
               </Form>
             )}

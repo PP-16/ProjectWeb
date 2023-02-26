@@ -1405,3 +1405,7 @@ section {
   -ms-transition: background-color 100ms linear;
   transition: background-color 100ms linear;
 }
+
+.border-top-primary{
+  boder-top:0.25rem solid #4e73df !important;
+}

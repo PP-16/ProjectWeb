@@ -37,41 +37,26 @@ function Sidebar() {
 
         <div className="sidebar-heading">Addons</div>
         <li className="nav-item">
-        <NavLink className="nav-link" to="/ShowEmp" >
-        <i className="fas fa-fw fa-chart-area"></i>
-            <span>Employeee</span>
+          <NavLink className="nav-link" to="/ShowEmp">
+            <i className="fas fa-fw fa-chart-area"></i>
+            <span>ข้อมูลบุคคลกร</span>
           </NavLink>
         </li>
 
         <li className="nav-item">
-          <a className="nav-link" href="tables.html">
+          <NavLink className="nav-link" to="/ShowProject">
             <i className="fas fa-fw fa-table"></i>
-            <span>Tables</span>
-          </a>
+            <span>ข้อมูลโครงงานบริการวิชาการ</span>
+          </NavLink>
         </li>
 
         <hr className="sidebar-divider d-none d-md-block" />
 
         <div className="text-center d-none d-md-inline">
-          <button className="rounded-circle border-0" id="sidebarToggle"></button>
-        </div>
-
-        <div className="sidebar-card d-none d-lg-flex">
-          <img
-            className="sidebar-card-illustration mb-2"
-            src="img/undraw_rocket.svg"
-            alt="..."
-          />
-          <p className="text-center mb-2">
-            <strong>SB Admin Pro</strong> is packed with premium features,
-            components, and more!
-          </p>
-          <a
-            className="btn btn-success btn-sm"
-            href="https://startbootstrap.com/theme/sb-admin-pro"
-          >
-            Upgrade to Pro!
-          </a>
+          <button
+            className="rounded-circle border-0"
+            id="sidebarToggle"
+          ></button>
         </div>
       </ul>
     </>

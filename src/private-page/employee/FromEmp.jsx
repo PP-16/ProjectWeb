@@ -6,6 +6,7 @@ import { ValidateContact } from "../../pages/validate-from/ValidateContact";
 import Select from "react-select";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { SearchAddress } from "../component/SearchAddress";
 
 const options = [
   { value: "chocolate", label: "Chocolate" },
@@ -66,17 +67,11 @@ const FromEmp = () => {
                     </div>
                     <div className="form-group col-md-3">
                       <label htmlFor="name">ชื่อ(TH)</label>
-                      <input
-                        value={values.name}
-                        className="form-control"
-                      />
+                      <input value={values.name} className="form-control" />
                     </div>
                     <div className="form-group col-md-3">
                       <label htmlFor="name">นาสกุล(TH)</label>
-                      <input
-                        value={values.name}
-                        className="form-control"
-                      />
+                      <input value={values.name} className="form-control" />
                     </div>
                     <div className="form-group col-md-3">
                       <label htmlFor="name">คำนำหน้าชื่อ(EN)</label>
@@ -88,17 +83,11 @@ const FromEmp = () => {
                     </div>
                     <div className="form-group col-md-3">
                       <label htmlFor="name">ชื่อ(EN)</label>
-                      <input
-                        value={values.name}
-                        className="form-control"
-                      />
+                      <input value={values.name} className="form-control" />
                     </div>
                     <div className="form-group col-md-3">
                       <label htmlFor="name">นาสกุล(EN)</label>
-                      <input
-                        value={values.name}
-                        className="form-control"
-                      />
+                      <input value={values.name} className="form-control" />
                     </div>
 
                     <div className="form-group col-md-3">
@@ -110,10 +99,7 @@ const FromEmp = () => {
                     </div>
                     <div className="form-group col-md-3">
                       <label htmlFor="name">อายุ</label>
-                      <input
-                        value={values.name}
-                        className="form-control"
-                      />
+                      <input value={values.name} className="form-control" />
                     </div>
                     <div className="form-group col-md-3">
                       <label htmlFor="name">สัญชาติ</label>
@@ -123,65 +109,49 @@ const FromEmp = () => {
                         options={options}
                       />
                     </div>
-                    <hr/>
+                    <hr />
                     <div className="row">
-                    <div className="form-group col-md-2">
-                      <label htmlFor="name">เลขที่</label>
-                      <input
-                        value={values.phone}
-                        className="form-control"
-                      />
-                    </div>
-                    <div className="form-group col-md-2">
-                      <label htmlFor="name">หมู่ที่</label>
-                      <input
-                        value={values.email}
-                        className="form-control"
-                      />
-                    </div>
+                      <div className="form-group col-md-2">
+                        <label htmlFor="name">เลขที่</label>
+                        <input value={values.phone} className="form-control" />
+                      </div>
+                      <div className="form-group col-md-2">
+                        <label htmlFor="name">หมู่ที่</label>
+                        <input value={values.email} className="form-control" />
+                      </div>
                       <div className="form-group col-md-4">
                         <label htmlFor="name">หมู่บ้านอาคาร</label>
-                        <input
-                          value={values.email}
-                          className="form-control"
-                        />
+                        <input value={values.email} className="form-control" />
                       </div>
                       <div className="form-group col-md-4">
                         <label htmlFor="name">ชั้น</label>
-                        <input
-                          value={values.email}
-                          className="form-control"
-                        />
+                        <input value={values.email} className="form-control" />
                       </div>
                       <div className="form-group col-md-4">
                         <label htmlFor="name">ตรอก/ซอย</label>
-                        <input
-                          value={values.email}
-                          className="form-control"
-                        />
+                        <input value={values.email} className="form-control" />
                       </div>
                       <div className="form-group col-md-4">
                         <label htmlFor="name">ถนน</label>
-                        <input
-                          value={values.email}
-                          className="form-control"
-                        />
+                        <input value={values.email} className="form-control" />
                       </div>
                       <div className="form-group col-md-4">
-                        <label htmlFor="name">ค้นหาที่อยู่</label>
-                        <input
-                          value={values.email}
-                          className="form-control"
-                        />
-                      </div>
+                      <SearchAddress
+                        title="ค้นหาที่อยู่"
+                        placeholder="- ค้นหาที่อยู่ -"
+                        returnAddress={(e) => {
+                          setFieldValue(
+                            "addressHomeFullAddress",  ` ต.${e.subdistrictName} อ.${e.districtName} จ.${e.provinceName} ${e.postCode} ` 
+                          );
+                        }}
+                        className="form-control pl-5" 
+                      />
+                    </div>
                       <div className="form-group col-md-4">
                         <label htmlFor="name">
                           ตำบล/อำเภอ/จังหวัด/รหัสไปรษณีย์
                         </label>
-                        <input
-                          value={values.email}
-                          className="form-control"
-                        />
+                        <input value={values.addressHomeFullAddress} className="form-control" />
                       </div>
                       <div className="form-group col-md-4">
                         <label htmlFor="name">ตำแหน่งงาน</label>
