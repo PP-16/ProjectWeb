@@ -47,8 +47,8 @@ function ShowData({ data, pagin, changePage, changePageSize, deleteData }) {
           <thead>
             <tr>
               <th>ลำดับ</th>
-              <th>ชื่อโครงการ</th>
-              <th>ปี พ.ศ.</th>
+              <th>ชื่อ-นาทสกุล</th>
+              <th>วันที่อบรม.</th>
               <th>จัดการ</th>
             </tr>
           </thead>
@@ -61,14 +61,14 @@ function ShowData({ data, pagin, changePage, changePageSize, deleteData }) {
                 <td>{item.projectName}</td>
                 <td></td>
                 <td>
-                  <button class="btn btn-warning btn-circle btn-sm p-3">
-                    <i class="fas fa-pen"></i>
+                  <button class="btn btn-success btn-circle btn-sm p-3">
+                  <i class="bi bi-printer"></i>
                   </button>{" "}
                   <button
                     class="btn btn-danger btn-circle btn-sm p-3"
                     onClick={() => deleteData(item)}
                   >
-                    <i class="fas fa-trash "></i>
+                    <i class="fas fa-trash"></i>
                   </button>
                 </td>
               </tr>

@@ -5,6 +5,7 @@ import systemSetting from "../../data/system-setting.json";
 import { DatePickerTH } from "../component/TextField";
 import ShowData from "./ShowData";
 import { getProject } from "../../Service/Project.Service";
+import { ConfirmDialog } from "../../components/AlertDiolog";
 
 const ShowProject = () => {
   const projectStatus = systemSetting.projectStatus;
@@ -28,117 +29,129 @@ const ShowProject = () => {
     setPagin(res.pagin);
   }
 
+  const Delete = (code) => {
+    ConfirmDialog(
+      "question",
+      "คุณต้องการลบข้อมูลใช่หรือไม่?",
+      "",
+      0,
+      true,
+      true
+    ).then(async (result) => {
+      console.log("55:",code);
+    });
+  };
+
   return (
-      <div className="row">
-        <div className="card mb-4 py-3 border-top-primary">
-          <div className="card-body">
-            <div className="row">
-              <h6>
-                <strong>ข้อมูลโครงการบริการวิชาการ</strong>
-              </h6>
-            </div>
-            <hr />
+    <div className="row">
+      <div className="card mb-4 py-3 border-top-primary">
+        <div className="card-body">
+          <div className="row">
+            <h6>
+              <strong>ข้อมูลโครงการบริการวิชาการ</strong>
+            </h6>
+          </div>
+          <hr />
 
-            {/* สำหรับค้นหา */}
-            <div className="row">
-              <Formik
-                initialValues={{
-                  projectName: "",
-                  projectStatus: "",
-                }}
-                onSubmit={(v) => {
-                  console.log("data : ",v.projectName);
-                  showData(v.projectName)
-                }}
-              >
-                {({ values, setFieldValue, errors, touched }) => (
-                  <Form>
-                    <div className="row">
-                      <div className="form-group col-md-4">
-                        <label htmlFor="projectName">ชื่อโครงการ</label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          name="projectName"
-                          onChange={(e)=>setFieldValue("projectName",e.target.value)}
-                        />
-                    
-                      </div>
-
-                      <div className="form-group col-md-2">
-                        <label htmlFor="projectStatus">สถานะการดำเนินงาน</label>
-                        <Select
-                          placeholder="- เลือก -"
-                          name="projectStatus"
-                          options={projectStatus}
-                          value={selectedOption}
-                          onChange={setSelectedOption}
-                          getOptionLabel={(option) => option.status}
-                          getOptionValue={(option) => option.code}
-                        />
-                      </div>
-
-                      <div className="form-group col-md-2">
-                        <label htmlFor="years">ปี พ.ศ.</label>
-                        <DatePickerTH
-                          editable={false}
-                          maxDate={new Date()}
-                          onlyYearPicker
-                          format="YYYY"
-                          id="startYear"
-                          value={
-                            values.startYear
-                              ? new Date((values.startYear - 543).toString())
-                              : ""
-                          }
-                          name="startYear"
-                          onChange={(date) => {
-                            setFieldValue("startYear", date.format());
-                          }}
-                          errors={errors}
-                          touched={touched}
-                        />
-                      </div>
-
-                      <div
-                        className="form-group col-md-2 text-center"
-                        style={{ marginTop: "29px" }}
-                      >
-                        <button
-                          type="submit"
-                          className="btn btn-primary btn-md m-2"
-                        >
-                          ค้นหา
-                        </button>
-                        <button
-                          type="reset"
-                          className="btn btn-secondary btn-md"
-                        >
-                          ล้างข้อมูล
-                        </button>
-                      </div>
-                    </div>
-
-                    <div className="row">
-                      <ShowData
-                        data={data}
-                        pagin={pagin}
-                        changePage={(page) => {
-                          showData(values.projectName, pagin.pagesize, page);
-                        }}
-                        changePageSize={(pagesize) => {
-                          showData(values.projectName, pagesize, 1);
-                        }}
+          {/* สำหรับค้นหา */}
+          <div className="row">
+            <Formik
+              initialValues={{
+                projectName: "",
+                projectStatus: "",
+              }}
+              onSubmit={(v) => {
+                console.log("data : ", v.projectName);
+                showData(v.projectName);
+              }}
+            >
+              {({ values, setFieldValue, errors, touched }) => (
+                <Form>
+                  <div className="row">
+                    <div className="form-group col-md-4">
+                      <label htmlFor="projectName">ชื่อโครงการ</label>
+                      <input
+                        className="form-control"
+                        type="text"
+                        name="projectName"
+                        onChange={(e) =>
+                          setFieldValue("projectName", e.target.value)
+                        }
                       />
                     </div>
-                  </Form>
-                )}
-              </Formik>
-            </div>
+
+                    <div className="form-group col-md-2">
+                      <label htmlFor="projectStatus">สถานะการดำเนินงาน</label>
+                      <Select
+                        placeholder="- เลือก -"
+                        name="projectStatus"
+                        options={projectStatus}
+                        value={selectedOption}
+                        onChange={setSelectedOption}
+                        getOptionLabel={(option) => option.status}
+                        getOptionValue={(option) => option.code}
+                      />
+                    </div>
+
+                    <div className="form-group col-md-2">
+                      <label htmlFor="years">ปี พ.ศ.</label>
+                      <DatePickerTH
+                        editable={false}
+                        maxDate={new Date()}
+                        onlyYearPicker
+                        format="YYYY"
+                        id="startYear"
+                        value={
+                          values.startYear
+                            ? new Date((values.startYear - 543).toString())
+                            : ""
+                        }
+                        name="startYear"
+                        onChange={(date) => {
+                          setFieldValue("startYear", date.format());
+                        }}
+                        errors={errors}
+                        touched={touched}
+                      />
+                    </div>
+
+                    <div
+                      className="form-group col-md-2 text-center"
+                      style={{ marginTop: "29px" }}
+                    >
+                      <button
+                        type="submit"
+                        className="btn btn-primary btn-md m-2"
+                      >
+                        ค้นหา
+                      </button>
+                      <button type="reset" className="btn btn-secondary btn-md">
+                        ล้างข้อมูล
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="row">
+                    <ShowData
+                      data={data}
+                      pagin={pagin}
+                      changePage={(page) => {
+                        showData(values.projectName, pagin.pagesize, page);
+                      }}
+                      changePageSize={(pagesize) => {
+                        showData(values.projectName, pagesize, 1);
+                      }}
+                      deleteData={(id)=>Delete(id)}
+                    />
+                  </div>
+                </Form>
+              )}
+            </Formik>
           </div>
         </div>
       </div>
+    </div>
   );
-};  
+};
 
 export default ShowProject;

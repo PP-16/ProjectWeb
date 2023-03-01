@@ -44,12 +44,18 @@ function Sidebar() {
         </li>
 
         <li className="nav-item">
-          <NavLink className="nav-link" to="/ShowProject">
+          <NavLink className="nav-link" to="/Project/ShowProject">
             <i className="fas fa-fw fa-table"></i>
             <span>ข้อมูลโครงงานบริการวิชาการ</span>
           </NavLink>
         </li>
 
+        <li className="nav-item">
+          <NavLink className="nav-link" to="/certificate/showCertificate">
+            <i className="fas fa-fw fa-table"></i>
+            <span>ใบประกาศ</span>
+          </NavLink>
+        </li>
         <hr className="sidebar-divider d-none d-md-block" />
 
         <div className="text-center d-none d-md-inline">
