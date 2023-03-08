@@ -9,7 +9,7 @@ function ShowData({ data, pagin, changePage, changePageSize, deleteData }) {
         <div className="d-flex justify-content-between">
           <div>
             <select
-              value={pagin.pagesize}
+              value={pagin}
               className="form-control form-select"
               onChange={(e) => {
                 changePageSize(parseInt(e.target.value));
@@ -23,15 +23,8 @@ function ShowData({ data, pagin, changePage, changePageSize, deleteData }) {
           </div>
           <div>
             <NavLink to="/Project/create">
-              <button
-                type="button"
-                className="btn btn-info"
-                onClick={() => {
-                  console.log();
-                }}
-              >
+            <i className="fa fa-plus-circle pr-1"></i>
                 เพิ่ม
-              </button>
             </NavLink>
           </div>
         </div>
@@ -58,15 +51,15 @@ function ShowData({ data, pagin, changePage, changePageSize, deleteData }) {
                 <td>
                   {(pagin.currentpage - 1) * pagin.pagesize + (index + 1)}
                 </td>
-                <td>{item.projectName}</td>
+                <td>{item.project_name}</td>
                 <td></td>
                 <td>
                   <button class="btn btn-warning btn-circle btn-sm p-3">
                     <i class="fas fa-pen"></i>
-                  </button>{" "}
+                  </button>
                   <button
                     class="btn btn-danger btn-circle btn-sm p-3"
-                    onClick={() => deleteData(item)}
+                    onClick={() => deleteData(item.code)}
                   >
                     <i class="fas fa-trash "></i>
                   </button>
@@ -77,12 +70,12 @@ function ShowData({ data, pagin, changePage, changePageSize, deleteData }) {
         </table>
 
         <div className="d-flex justify-content-between">
-          <div>จำนวน {pagin.totalrow} รายการ</div>
+          <div>จำนวน {pagin.totalrows} รายการ</div>
           <div>
             <Pagination
               activePage={pagin.currentpage}
               itemsCountPerPage={pagin.pagesize}
-              totalItemsCount={pagin.totalrow}
+              totalItemsCount={pagin.totalrows}
               pageRangeDisplayed={pagin.totalpage}
               onChange={(page) => {
                 changePage(page);

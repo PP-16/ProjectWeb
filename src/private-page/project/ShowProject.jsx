@@ -4,7 +4,7 @@ import Select from "react-select";
 import systemSetting from "../../data/system-setting.json";
 import { DatePickerTH } from "../component/TextField";
 import ShowData from "./ShowData";
-import { getProject } from "../../Service/Project.Service";
+import { getProject,deleteProject } from "../../Service/Project.Service";
 import { ConfirmDialog } from "../../components/AlertDiolog";
 
 const ShowProject = () => {
@@ -19,15 +19,25 @@ const ShowProject = () => {
     totalpage: 1,
   });
   useEffect(() => {
-    showData("", 10, 1);
+    showData(10, 1,"");
   }, []);
 
-  function showData(search, pagesize, currentpage) {
-    let res = getProject(search, pagesize, currentpage);
-    console.log(res);
-    setData(res.data);
-    setPagin(res.pagin);
-  }
+  const showData = async (pageSize, currentPage, projectName) => {
+    let res = await getProject(pageSize, currentPage, projectName);
+    if (res) {
+      if (res.statusCode === 200) {
+        setData(res.data);
+        setPagin(res.pagin);
+      }
+    }
+  };
+
+  // function showData(search, pagesize, currentpage) {
+  //   let res = getProject(search, pagesize, currentpage);
+  //   console.log(res);
+  //   setData(res.data);
+  //   setPagin(res.pagin);
+  // }
 
   const Delete = (code) => {
     ConfirmDialog(
@@ -38,7 +48,15 @@ const ShowProject = () => {
       true,
       true
     ).then(async (result) => {
-      console.log("55:",code);
+      if(result.isConfirmed){
+        let res = await deleteProject(code)
+        if(res.statusCode === 200){
+          console.log("Deleted",code);
+          showData(10,1,"")
+        }else{
+          console.log("can't delete")
+        }
+      }
     });
   };
 
@@ -136,12 +154,12 @@ const ShowProject = () => {
                       data={data}
                       pagin={pagin}
                       changePage={(page) => {
-                        showData(values.projectName, pagin.pagesize, page);
+                        showData(10, page, values.projectName);
                       }}
                       changePageSize={(pagesize) => {
-                        showData(values.projectName, pagesize, 1);
+                        showData(pagesize, 1, values.projectName);
                       }}
-                      deleteData={(id)=>Delete(id)}
+                      deleteData={(id) => Delete(id)}
                     />
                   </div>
                 </Form>

@@ -4,7 +4,7 @@ import Select from "react-select";
 import systemSetting from "../../data/system-setting.json";
 import { DatePickerTH } from "../component/TextField";
 import ShowData from "./ShowData";
-import { getProject } from "../../Service/Project.Service";
+import { getProject2 } from "../../Service/Project.Service";
 import { ConfirmDialog } from "../../components/AlertDiolog";
 
 function ShowCertificate() {
@@ -23,7 +23,7 @@ function ShowCertificate() {
     }, []);
   
     function showData(search, pagesize, currentpage) {
-      let res = getProject(search, pagesize, currentpage);
+      let res = getProject2(search, pagesize, currentpage);
       console.log(res);
       setData(res.data);
       setPagin(res.pagin);
